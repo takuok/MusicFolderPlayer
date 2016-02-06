@@ -57,15 +57,12 @@ public class MusicFolderPlayerService extends Service {
 		Log.i(TAG, "onStartCommand");
 
 		Intent t_intent = new Intent(this, MainActivity.class);
-		t_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-				| Intent.FLAG_ACTIVITY_NEW_TASK);
+		t_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 		PendingIntent pintent = PendingIntent.getActivity(this, 0, t_intent, 0);
 
-		Notification.Builder bld = new Notification.Builder(this)
-				.setContentIntent(pintent).setSmallIcon(R.drawable.ic_launcher)
-				.setTicker("Start MusicFolderPlayerService")
-				.setContentTitle("MusicFolderPlayer").setContentText("サービス起動中")
-				.setWhen(System.currentTimeMillis());
+		Notification.Builder bld = new Notification.Builder(this).setContentIntent(pintent)
+				.setSmallIcon(R.drawable.ic_launcher).setTicker("Start MusicFolderPlayerService")
+				.setContentTitle("MusicFolderPlayer").setContentText("サービス起動中").setWhen(System.currentTimeMillis());
 		Notification notification = bld.build();
 
 		startForeground(FORGROUND_ID, notification);
@@ -178,20 +175,15 @@ public class MusicFolderPlayerService extends Service {
 								} else if (mMediaPlayerNext != null) {
 									t = Math.max(1000, mDuration - cur + 1000);
 								} else {
-									t = Math.max(
-											1,
-											Math.min(60 * 60 * 1000, mDuration
-													- cur - 30 * 1000));
+									t = Math.max(1, Math.min(60 * 60 * 1000, mDuration - cur - 30 * 1000));
 								}
 							}
 						}
 						try {
 							if (t > 1000) {
-								Log.d(TAG, "sleep " + t + " mpnxt:"
-										+ (mMediaPlayerNext != null));
+								Log.d(TAG, "sleep " + t + " mpnxt:" + (mMediaPlayerNext != null));
 							} else {
-								Log.v(TAG, "sleep " + t + " mpnxt:"
-										+ (mMediaPlayerNext != null));
+								Log.v(TAG, "sleep " + t + " mpnxt:" + (mMediaPlayerNext != null));
 							}
 							long bef = System.currentTimeMillis();
 							Thread.sleep(t);
@@ -200,6 +192,7 @@ public class MusicFolderPlayerService extends Service {
 								Log.w(TAG, "Long sleep...");
 							}
 						} catch (InterruptedException e) {
+							Log.d(TAG, "interrupted");
 						}
 					}
 					if (mMediaPlayer != null) {
@@ -307,8 +300,7 @@ public class MusicFolderPlayerService extends Service {
 	}
 
 	private MediaPlayer createMediaPlayer(File f) {
-		MediaPlayer mp = MediaPlayer.create(getApplicationContext(),
-				Uri.fromFile(f));
+		MediaPlayer mp = MediaPlayer.create(getApplicationContext(), Uri.fromFile(f));
 		mp.setOnCompletionListener(new OnCompletionListener() {
 			@Override
 			public void onCompletion(MediaPlayer mp) {
@@ -339,8 +331,7 @@ public class MusicFolderPlayerService extends Service {
 	private void registerBroadcastReceiver() {
 		try {
 			mReceiver = new MyBroadcastReceiver();
-			registerReceiver(mReceiver, new IntentFilter(
-					Intent.ACTION_HEADSET_PLUG));
+			registerReceiver(mReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
 		} catch (Exception e) {
 			SdLog.put("registerBroadcastReceiver) " + e);
 		}
@@ -563,7 +554,7 @@ public class MusicFolderPlayerService extends Service {
 					}
 				}
 				mIsPause = false;
-				interruptPlayThread();
+				startThread();
 			}
 			mIsPlaying = true;
 		} catch (Exception e) {
@@ -579,6 +570,7 @@ public class MusicFolderPlayerService extends Service {
 			if (mMediaPlayer != null) {
 				synchronized (mMediaPlayer) {
 					mMediaPlayer.pause();
+					mMediaPlayer.setNextMediaPlayer(null);
 					mResumePos = mMediaPlayer.getCurrentPosition();
 					mIsPause = true;
 				}
