@@ -23,7 +23,7 @@ public class DirListAdapter extends BaseAdapter {
 		mInflater = inflater;
 	}
 
-	private class FileComparator implements Comparator<File> {
+	static class FileComparator implements Comparator<File> {
 
 		@Override
 		public int compare(File f0, File f1) {

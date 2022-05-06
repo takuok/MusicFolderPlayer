@@ -161,7 +161,7 @@
                         style="?android:attr/buttonStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="50dp"
+                        android:layout_marginLeft="5dp"
                         android:minWidth="32dp"
                         android:text="&lt;&lt;5" />
 
@@ -182,13 +182,21 @@
                         android:text="&lt;&lt;30" />
 
                     <Button
+                        android:id="@+id/BTN_fw5"
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="32dp"
+                        android:text=">>5" />
+
+                    <Button
                         android:id="@+id/BTN_fw30"
                         style="?android:attr/buttonStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:minWidth="32dp"
                         android:text=">>30" />
-                
+
                 </LinearLayout>
                 
             </LinearLayout>

@@ -61,6 +61,7 @@ public class MainActivity extends Activity {
 	private Button mBtnRew5;
 	private Button mBtnRew10;
 	private Button mBtnRew30;
+	private Button mBtnFw5;
 	private Button mBtnFw30;
 	private Button mBtnClose;
 	private SeekBar mSeekBar;
@@ -167,7 +168,7 @@ public class MainActivity extends Activity {
 
 		File f = new File( mRootPath );
 		if (!f.exists()) {
-			Log.e(TAG, "Music foler not found!");
+			Log.e(TAG, "Music folder not found!");
 		}
 
 		setCurPath(mRootPath);
@@ -203,6 +204,7 @@ public class MainActivity extends Activity {
 		mBtnRew5 = (Button) this.findViewById(R.id.BTN_rew5);
 		mBtnRew10 = (Button) this.findViewById(R.id.BTN_rew10);
 		mBtnRew30 = (Button) this.findViewById(R.id.BTN_rew30);
+		mBtnFw5 = (Button) this.findViewById(R.id.BTN_fw5);
 		mBtnFw30 = (Button) this.findViewById(R.id.BTN_fw30);
 		mBtnClose = (Button) this.findViewById(R.id.BTN_close);
 		setPlayingSongText(null);
@@ -270,6 +272,12 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				mService.seekSec(-30);
+			}
+		});
+		mBtnFw5.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mService.seekSec(5);
 			}
 		});
 		mBtnFw30.setOnClickListener(new OnClickListener() {
